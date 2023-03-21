@@ -91,6 +91,10 @@ pipeline {
                     def artifactId = sh script: 'mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout -f javaapi/pom.xml', returnStdout: true
                     def packaging = sh script: 'mvn help:evaluate -Dexpression=project.packaging -q -DforceStdout -f javaapi/pom.xml', returnStdout: true
                     def groupId = sh script: 'mvn help:evaluate -Dexpression=project.groupId -q -DforceStdout -f javaapi/pom.xml', returnStdout: true
+                    echo "${version}"
+                    echo "${artifactId}"
+                    echo "${packaging}"
+                    echo "${groupId}"
 
                     nexusArtifactUploader artifacts: [
                         [
