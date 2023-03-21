@@ -63,6 +63,7 @@ pipeline {
                         -Dsonar.projectName=spring-boot-starter-parent \
                         -Dsonar.projectVersion=2.3.1 \
                         -Dsonar.sources=javaapi/src/ \
+                        -Dsonar.java.binaries=javaapi/target/test-classes/com/springwork/bookwork/ \
                         -Dsonar.junit.reportsPath=javaapi/target/surefire-reports/ \
                         -Dsonar.java.checkstyle.reportPaths=javaapi/target/checkstyle-result.xml
                        '''
