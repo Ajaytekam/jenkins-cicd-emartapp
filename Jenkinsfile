@@ -96,13 +96,13 @@ pipeline {
                         [
                             artifactId: "${artifactId}", 
                             classifier: '', 
-                            file: "target/${artifactId}-${version}.jar",
+                            file: "javaapi/target/${artifactId}-${version}.jar",
                             type: "${packaging}"
                         ]
                     ], 
                     credentialsId: 'nexus-creds', 
                     groupId: "${groupId}",
-                    nexusUrl: '13.233.178.15:8081', 
+                    nexusUrl: '172.31.37.118:8081', 
                     nexusVersion: 'nexus3', 
                     protocol: 'http', 
                     repository: 'emartapp-release', 
