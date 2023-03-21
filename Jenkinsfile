@@ -21,19 +21,19 @@ pipeline {
 
         stage('Integration Testing: SpringBoot API') {
             steps{
-                sh 'mvn verify -DskipUnitTests -f javaapi/pom.xml'  
+                sh 'mvn verify -f javaapi/pom.xml'  
             }
         }
 
         stage('Maven Build: Build and Archieve artifacts and run junit tests') {
             steps {
-                sh 'mvn clean install -DskipTests -f javaapi/pom.xml'
+                sh 'mvn clean install -f javaapi/pom.xml'
             }
 
             post {
                 success {
                     echo 'Running Junit Test...' 
-                    junit '**/javaapi/target/surefire-reports/**/*.xml'
+                    junit 'javaapi/target/surefire-reports/**/*.xml'
                     echo 'Now archiving it...'
                     archiveArtifacts artifacts: '**/javaapi/target/*.jar'
                 }
