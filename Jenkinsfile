@@ -45,7 +45,7 @@ pipeline {
                 }
             }
         }
-        /* 
+        
         stage('Checkstyle Analysis') {
             steps {
                 sh 'mvn checkstyle:checkstyle -f javaapi/pom.xml'
@@ -115,7 +115,6 @@ pipeline {
             }
         }
         
-
         stage('Build App Image') {
             steps {
                 script {
@@ -124,16 +123,12 @@ pipeline {
             }
         }
 
-        */
         stage('Scan Image with trivy') {
             steps {
-                //sh 'trivy image --format template --template "@/usr/local/share/trivy/templates/html.tpl" -o report.html '
-                sh 'echo $appRegistry:latest'
-                sh 'echo ${appRegistry}:latest'
+                sh 'trivy image --format template --template "@/usr/local/share/trivy/templates/html.tpl" -o report.html --timeout 30m ${appRegistry}:latest'
             }
-
         }
-        /*
+        
         stage('Upload app image') {
             steps {
                 script {
@@ -144,7 +139,6 @@ pipeline {
                 }
             }
         }
-        */
 
     }
 }
