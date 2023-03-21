@@ -16,7 +16,7 @@ pipeline {
         stage('Unit Testing : SpringBoot API') {
             steps{
                 sh 'cd javaapi'
-                sh 'mvn test'
+                sh 'mvn test -f javaapi/pom.xml'
             }
         }
 
