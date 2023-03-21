@@ -15,13 +15,15 @@ pipeline {
 
         stage('Unit Testing : SpringBoot API') {
             steps{
-                sh 'cd ./javaapi && mvn test'
+                sh 'cd javaapi'
+                sh 'mvn test'
             }
         }
 
         stage('Integration Testing: SpringBoot API') {
             steps{
-                sh 'cd javaapi && mvn verify -DskipUnitTests'  
+                sh 'cd javaapi'
+                sh 'mvn verify -DskipUnitTests'  
             }
         }
 
