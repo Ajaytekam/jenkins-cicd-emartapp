@@ -27,7 +27,7 @@ pipeline {
 
         stage('Maven Build: Build and Archieve artifacts and run junit tests') {
             steps {
-                sh 'mvn clean install -DtestFailureIgnore=true -f javaapi/pom.xml'
+                sh 'mvn clean install -f javaapi/pom.xml'
             }
 
             post {
@@ -47,8 +47,6 @@ pipeline {
         }
 
 
-
-        /* 
         stage('SonarQube Code Analysis') {
 
             environment {
@@ -59,16 +57,14 @@ pipeline {
                 script {
                     withSonarQubeEnv(credentialsId: 'sonar-api') {
                         //sh 'mvn clean package sonar:sonar'
-                        sh '''export JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64;
+                       sh '''
                         ${scannerHome}/bin/sonar-scanner -X \
-                        -Dsonar.projectKey=vprofile \
-                        -Dsonar.projectName=vprofile \
-                        -Dsonar.projectVersion=1.0 \
-                        -Dsonar.sources=src/ \
-                        -Dsonar.java.binaries=target/test-classes/com/visualpathit/account/controllerTest/ \
-                        -Dsonar.junit.reportsPath=target/surefire-reports/ \
-                        -Dsonar.jacoco.reportsPath=target/jacoco.exec \
-                        -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml
+                        -Dsonar.projectKey=spring-boot-starter-parent \
+                        -Dsonar.projectName=spring-boot-starter-parent \
+                        -Dsonar.projectVersion=2.3.1 \
+                        -Dsonar.sources=javaapi/src/ \
+                        -Dsonar.junit.reportsPath=javaapi/target/surefire-reports/ \
+                        -Dsonar.java.checkstyle.reportPaths=javaapi/target/checkstyle-result.xml
                        '''
                     }
                 }
@@ -85,7 +81,6 @@ pipeline {
                 }
             }
         }
-        */
 
     }
 }
