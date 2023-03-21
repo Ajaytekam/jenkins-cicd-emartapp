@@ -57,7 +57,7 @@ pipeline {
                 script {
                     withSonarQubeEnv(credentialsId: 'sonar-api') {
                         //sh 'mvn clean package sonar:sonar'
-                       sh '''
+                       sh '''export JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64;
                         ${scannerHome}/bin/sonar-scanner -X \
                         -Dsonar.projectKey=spring-boot-starter-parent \
                         -Dsonar.projectName=spring-boot-starter-parent \
