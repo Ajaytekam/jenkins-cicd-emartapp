@@ -19,7 +19,6 @@ pipeline {
             }
         }
 
-        /*
         stage('Unit Testing : SpringBoot API') {
             steps{
                 sh 'mvn test -f javaapi/pom.xml'
@@ -46,7 +45,7 @@ pipeline {
                 }
             }
         }
-        
+        /* 
         stage('Checkstyle Analysis') {
             steps {
                 sh 'mvn checkstyle:checkstyle -f javaapi/pom.xml'
