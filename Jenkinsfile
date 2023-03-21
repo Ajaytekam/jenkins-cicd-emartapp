@@ -19,6 +19,7 @@ pipeline {
             }
         }
 
+        /*
         stage('Unit Testing : SpringBoot API') {
             steps{
                 sh 'mvn test -f javaapi/pom.xml'
@@ -52,7 +53,6 @@ pipeline {
             }
         }
 
-        /*
         stage('SonarQube Code Analysis') {
 
             environment {
@@ -115,7 +115,7 @@ pipeline {
                 }
             }
         }
-        */
+        
 
         stage('Build App Image') {
             steps {
@@ -125,6 +125,16 @@ pipeline {
             }
         }
 
+        */
+        stage('Scan Image with trivy') {
+            steps {
+                //sh 'trivy image --format template --template "@/usr/local/share/trivy/templates/html.tpl" -o report.html '
+                sh 'echo $appRegistry:latest'
+                sh 'echo ${appRegistry}:latest'
+            }
+
+        }
+        /*
         stage('Upload app image') {
             steps {
                 script {
@@ -135,6 +145,7 @@ pipeline {
                 }
             }
         }
+        */
 
     }
 }
