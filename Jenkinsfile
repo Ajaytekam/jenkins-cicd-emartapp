@@ -15,21 +15,18 @@ pipeline {
 
         stage('Unit Testing : SpringBoot API') {
             steps{
-                sh 'cd javaapi'
                 sh 'mvn test -f javaapi/pom.xml'
             }
         }
 
         stage('Integration Testing: SpringBoot API') {
             steps{
-                sh 'cd javaapi'
                 sh 'mvn verify -DskipUnitTests'  
             }
         }
 
         stage('Maven Build: SpringBoot API') {
             steps {
-                sh 'cd java'
                 sh 'mvn clean install -DskipTests'
             }
 
