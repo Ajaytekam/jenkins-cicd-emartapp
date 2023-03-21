@@ -9,13 +9,12 @@ pipeline {
     stages {
         stage('Git Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/praveensirvi1212/DevSecOps-project.git'
+                git branch: 'main', url: 'https://github.com/Ajaytekam/jenkins-cicd-emartapp.git'
             }
         }
 
         stage('Unit Testing : SpringBoot API') {
             steps{
-                sh 'ls -al'
                 sh 'cd javaapi'
                 sh 'mvn test'
             }
@@ -30,7 +29,8 @@ pipeline {
 
         stage('Maven Build: SpringBoot API') {
             steps {
-                sh 'cd javaapi && mvn clean install -DskipTests'
+                sh 'cd java'
+                sh 'mvn clean install -DskipTests'
             }
 
             post {
@@ -43,7 +43,8 @@ pipeline {
 
         stage('Checkstyle Analysis') {
             steps {
-                sh 'cd javaapi && mvn checkstyle:checkstyle'
+                sh 'cd java'
+                sh 'mvn checkstyle:checkstyle'
             }
         }
 
