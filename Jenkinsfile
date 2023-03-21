@@ -21,13 +21,13 @@ pipeline {
 
         stage('Integration Testing: SpringBoot API') {
             steps{
-                sh 'mvn verify -DskipUnitTests'  
+                sh 'mvn verify -DskipUnitTests -f javaapi/pom.xml'  
             }
         }
 
         stage('Maven Build: SpringBoot API') {
             steps {
-                sh 'mvn clean install -DskipTests'
+                sh 'mvn clean install -DskipTests -f javaapi/pom.xml'
             }
 
             post {
@@ -41,7 +41,7 @@ pipeline {
         stage('Checkstyle Analysis') {
             steps {
                 sh 'cd java'
-                sh 'mvn checkstyle:checkstyle'
+                sh 'mvn checkstyle:checkstyle -f javaapi/pom.xml'
             }
         }
 
