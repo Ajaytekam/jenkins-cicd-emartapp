@@ -33,7 +33,7 @@ pipeline {
             post {
                 success {
                     echo 'Running Junit Test...' 
-                    junit 'javaapi/target/surefire-reports/**/*.xml'
+                    junit 'javaapi/target/surefire-reports/*.xml'
                     echo 'Now archiving it...'
                     archiveArtifacts artifacts: '**/javaapi/target/*.jar'
                 }
