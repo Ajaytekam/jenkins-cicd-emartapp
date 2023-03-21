@@ -4,7 +4,7 @@ pipeline {
     environment {    
         registryCredential = 'ecr:ap-south-1:aws-creds'    
         appRegistry = "470960211354.dkr.ecr.ap-south-1.amazonaws.com/emartapp"
-        vprofileRegistry = "470960211354.dkr.ecr.ap-south-1.amazonaws.com"  
+        vprofileRegistry = "https://470960211354.dkr.ecr.ap-south-1.amazonaws.com"  
     }   
 
     tools {
