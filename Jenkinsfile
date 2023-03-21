@@ -25,7 +25,7 @@ pipeline {
             }
         }
 
-        stage('Maven Build: SpringBoot API') {
+        stage('Maven Build: Build and Archieve artifacts and run junit tests') {
             steps {
                 sh 'mvn clean install -DskipTests -f javaapi/pom.xml'
             }
@@ -34,16 +34,18 @@ pipeline {
                 success {
                     echo 'Now archiving it...'
                     archiveArtifacts artifacts: '**/javaapi/target/*.jar'
+                    junit 'javaapi/target/surefire-reports/**/*.xml'
                 }
             }
         }
-
+        
         stage('Checkstyle Analysis') {
             steps {
-                sh 'cd java'
                 sh 'mvn checkstyle:checkstyle -f javaapi/pom.xml'
             }
         }
+
+
 
         /* 
         stage('SonarQube Code Analysis') {
