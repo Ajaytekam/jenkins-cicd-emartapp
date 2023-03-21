@@ -52,7 +52,7 @@ pipeline {
             }
         }
 
-
+        /*
         stage('SonarQube Code Analysis') {
 
             environment {
@@ -77,7 +77,7 @@ pipeline {
                 }
             }
         }
-
+    
         stage('SonarQube Quality Gate Status') {
             steps{
                 timeout(time: 1, unit: 'HOURS') {
@@ -115,11 +115,12 @@ pipeline {
                 }
             }
         }
- 
+        */
+
         stage('Build App Image') {
             steps {
                 script {
-                    dockerImage = docker.build(appRegistry + ":$BUILD_NUMBER", "javaapi/Dockerfile")
+                    dockerImage = docker.build(appRegistry + ":$BUILD_NUMBER", "javaapi/.")
                 }
             }
         }
