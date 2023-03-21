@@ -82,6 +82,34 @@ pipeline {
                 }
             }
         }
+        
+        stage('Nexus Artifact uploader') {
+            steps {
+                script {
+
+                    def version = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout -f javaapi/pom.xml', returnStdout: true
+                    def artifactId = sh script: 'mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout -f javaapi/pom.xml', returnStdout: true
+                    def packaging = sh script: 'mvn help:evaluate -Dexpression=project.packaging -q -DforceStdout -f javaapi/pom.xml', returnStdout: true
+                    def groupId = sh script: 'mvn help:evaluate -Dexpression=project.groupId -q -DforceStdout -f javaapi/pom.xml', returnStdout: true
+
+                    nexusArtifactUploader artifacts: [
+                        [
+                            artifactId: "${artifactId}", 
+                            classifier: '', 
+                            file: "target/${artifactId}-${version}.jar",
+                            type: "${packaging}"
+                        ]
+                    ], 
+                    credentialsId: 'nexus-creds', 
+                    groupId: "${groupId}",
+                    nexusUrl: '13.233.178.15:8081', 
+                    nexusVersion: 'nexus3', 
+                    protocol: 'http', 
+                    repository: 'emartapp-release', 
+                    version: "${version}"
+                }
+            }
+        }
 
     }
 }
