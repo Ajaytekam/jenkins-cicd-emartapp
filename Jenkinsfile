@@ -34,6 +34,7 @@ pipeline {
                 success {
                     echo 'Running Junit Test...' 
                     junit 'javaapi/target/surefire-reports/**/*.xml'
+                    sh "test ${currentBuild.currentResult} != UNSTABLE" // workaround for UNSTABLE build mark
                     echo 'Now archiving it...'
                     archiveArtifacts artifacts: '**/javaapi/target/*.jar'
                 }
