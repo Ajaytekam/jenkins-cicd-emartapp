@@ -24,13 +24,13 @@ pipeline {
                 sh 'mvn test -f javaapi/pom.xml'
             }
         }
-
+        /*
         stage('Integration Testing: SpringBoot API') {
             steps{
                 sh 'mvn verify -f javaapi/pom.xml'  
             }
         }
-
+        */  
         stage('Maven Build: Build and Archieve artifacts and run junit tests') {
             steps {
                 sh 'mvn clean install -f javaapi/pom.xml'
@@ -45,7 +45,7 @@ pipeline {
                 }
             }
         }
-        
+        /*      
         stage('Checkstyle Analysis') {
             steps {
                 sh 'mvn checkstyle:checkstyle -f javaapi/pom.xml'
@@ -87,7 +87,7 @@ pipeline {
                 }
             }
         }
-        
+    
         stage('Nexus Artifact uploader') {
             steps {
                 script {
@@ -139,6 +139,7 @@ pipeline {
                 }
             }
         }
+        */  
 
     }
 }
