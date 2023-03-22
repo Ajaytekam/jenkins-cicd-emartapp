@@ -159,7 +159,7 @@ pipeline {
                             artifactId: 'e-mart', 
                             classifier: '', 
                             file: 'nodeapi/e-mart-1.0.0.tgz', 
-                            type: 'tgz'
+                            type: 'tar/gz'
                         ]
                     ], 
                     credentialsId: 'nexus-cred', 
@@ -169,7 +169,6 @@ pipeline {
                     protocol: 'http', 
                     repository: 'nodeapi-release', 
                     version: '1.0.0'
-
                 }
             }
         }
