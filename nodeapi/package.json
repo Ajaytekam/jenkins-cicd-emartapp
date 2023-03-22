@@ -32,5 +32,8 @@
     "nodemailer": "^6.6.5",
     "smtp": "^0.1.4",
     "validator": "^13.6.0"
+  },
+  "publishConfig": {
+          "registry": "http://172.31.37.118:8081/repository/nodeapi-release/"
   }
 }
