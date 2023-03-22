@@ -164,7 +164,7 @@ pipeline {
                         -Dsonar.projectKey=NodeJS-App \
                         -Dsonar.projectName=NodeJS-App \
                         -Dsonar.projectVersion=1.0 \
-                        sonar.projectDescription=DemoEmartProject \
+                        -Dsonar.projectDescription=DemoEmartProject \
                         -Dsonar.sources=nodeapi/ \
                         -Dsonar.language=js \
                         sonar.sourceEncoding=UTF-8 
