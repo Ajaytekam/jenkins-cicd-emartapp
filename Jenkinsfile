@@ -3,8 +3,12 @@ pipeline {
 
     environment {    
         registryCredential = 'ecr:ap-south-1:aws-creds'    
-        appRegistry = "470960211354.dkr.ecr.ap-south-1.amazonaws.com/emartapp"
-        vprofileRegistry = "https://470960211354.dkr.ecr.ap-south-1.amazonaws.com"  
+        javaapi_appRegistry = "470960211354.dkr.ecr.ap-south-1.amazonaws.com/emartapp"
+        javaapi_Registry = "https://470960211354.dkr.ecr.ap-south-1.amazonaws.com"  
+        nodeapi_appRegistry = "470960211354.dkr.ecr.ap-south-1.amazonaws.com/nodeapi" 
+        nodeapi_Registry = "https://470960211354.dkr.ecr.ap-south-1.amazonaws.com"
+        client_appRegistry = "470960211354.dkr.ecr.ap-south-1.amazonaws.com/clientapp"
+        client_Registry = "https://470960211354.dkr.ecr.ap-south-1.amazonaws.com"
     }   
 
     tools {
@@ -118,28 +122,28 @@ pipeline {
         stage('Build App Image') {
             steps {
                 script {
-                    dockerImage = docker.build(appRegistry + ":$BUILD_NUMBER", "javaapi/.")
+                    dockerImage = docker.build(javaapi_appRegistry + ":$BUILD_NUMBER", "javaapi/.")
                 }
             }
         }
 
         stage('Scan Image with trivy') {
             steps {
-                sh 'trivy image --format template --template "@/usr/local/share/trivy/templates/html.tpl" -o report.html --timeout 30m ${appRegistry}:latest'
+                sh 'trivy image --format template --template "@/usr/local/share/trivy/templates/html.tpl" -o report.html --timeout 30m ${javaapi_appRegistry}:latest'
             }
         }
         
         stage('Upload app image') {
             steps {
                 script {
-                    docker.withRegistry( vprofileRegistry, registryCredential ) {
+                    docker.withRegistry( javaapi_Registry, registryCredential ) {
                         dockerImage.push("$BUILD_NUMBER")    
                         dockerImage.push("latest")   
                     }
                 }
             }
         }
-        */  
+        
 
         stage('Build NodeJS App') {  
             steps {
@@ -149,31 +153,66 @@ pipeline {
                 }
             }
         }
-        
-        stage('Nexus Artifact uploader') {
+
+        stage('Build App Image: NodeJS') {
             steps {
                 script {
-
-                    nexusArtifactUploader artifacts: [
-                        [
-                            artifactId: 'e-mart', 
-                            classifier: '', 
-                            file: 'nodeapi/e-mart-1.0.0.tgz', 
-                            type: 'tar/gz'
-                        ]
-                    ], 
-                    credentialsId: 'nexus-cred', 
-                    groupId: 'nodejs-app', 
-                    nexusUrl: '172.31.37.118:8081', 
-                    nexusVersion: 'nexus3', 
-                    protocol: 'http', 
-                    repository: 'nodeapi-release', 
-                    version: '1.0.0'
+                    dockerImage = docker.build(nodeapi_appRegistry + ":$BUILD_NUMBER", "nodeapi/.")
+                }
+            }
+        }
+        
+        stage('Scan Image with trivy: NodeJS') {
+            steps {
+                sh 'trivy image --format template --template "@/usr/local/share/trivy/templates/html.tpl" -o report.html --timeout 30m ${nodeapi_appRegistry}:latest'
+            }
+        }
+        
+        
+        stage('Upload app imageL: NodeJS') {
+            steps {
+                script {
+                    docker.withRegistry( nodeapi_Registry, registryCredential ) {
+                        dockerImage.push("$BUILD_NUMBER")    
+                        dockerImage.push("latest")   
+                    }
                 }
             }
         }
 
+        stage('Build Client App') {  
+            steps {
+                nodejs(nodeJSInstallationName: 'nodejs') {
+                    sh 'cd client && npm install && npm run build --prod'
+                }
+            }
+        }
 
+        stage('Build App Image: ClientApp') {
+            steps {
+                script {
+                    dockerImage = docker.build(client_appRegistry + ":$BUILD_NUMBER", "client/.")
+                }
+            }
+        }
+        
+        stage('Scan Image with trivy: clientApp') {
+            steps {
+                sh 'trivy image --format template --template "@/usr/local/share/trivy/templates/html.tpl" -o report.html --timeout 30m ${client_appRegistry}:latest'
+            }
+        }
+        
+        
+        stage('Upload app imageL: ClientApp') {
+            steps {
+                script {
+                    docker.withRegistry( client_Registry, registryCredential ) {
+                        dockerImage.push("$BUILD_NUMBER")    
+                        dockerImage.push("latest")   
+                    }
+                }
+            }
+        }
 
     }
 }
