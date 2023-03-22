@@ -141,11 +141,11 @@ pipeline {
         }
         */  
 
-        stage('SoanarQube- Analysis') {
+        stage('SoanarQube-Analysis') {
             steps {
                 nodejs(nodeJSInstallationName: 'nodejs') {
                     sh 'cd nodeapi && npm install'
-                    withSonarQubeEnv('sonar') {
+                    withSonarQubeEnv('Sonar4.8') {
                         sh 'cd nodeapi && npm install sonar-scanner'
                         sh 'cd nodeapi && npm run sonar'
                     }
