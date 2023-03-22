@@ -146,6 +146,9 @@ pipeline {
             steps {
                 nodejs(nodeJSInstallationName: 'nodejs') {
                     sh 'cd nodeapi && npm install'
+                    sh 'cd nodeapi && npm run test'
+                    sh 'cd nodeapi && npm run coverage-lcov'
+
                 }
             }
         }
