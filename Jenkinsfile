@@ -143,7 +143,7 @@ pipeline {
 
         stage('SoanarQube- Analysis') {
             steps {
-                nodejs(nodeJSInstallation: 'nodejs') {
+                nodejs(nodeJSInstallationName: 'nodejs') {
                     sh 'cd nodeapi && npm install'
                 }
             }
