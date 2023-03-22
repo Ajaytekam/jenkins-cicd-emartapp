@@ -145,6 +145,10 @@ pipeline {
             steps {
                 nodejs(nodeJSInstallationName: 'nodejs') {
                     sh 'cd nodeapi && npm install'
+                    withSonarQubeEnv('sonar') {
+                        sh 'cd nodeapi && npm install sonar-scanner'
+                        sh 'cd nodeapi && npm run sonar'
+                    }
                 }
             }
         }
