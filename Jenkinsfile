@@ -146,7 +146,7 @@ pipeline {
             steps {
                 nodejs(nodeJSInstallationName: 'nodejs') {
                     sh 'cd nodeapi && npm install'
-                    sh 'cd nodeapi && npm publish'
+                    sh 'cd nodeapi && npm pack'
                 }
             }
         }
