@@ -160,13 +160,13 @@ pipeline {
 
                 script {
                     withSonarQubeEnv(credentialsId: 'sonar-api') {
-                      sh '''export JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64;
+                      sh '''cd nodeapi && export JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64;
                         ${scannerHome}/bin/sonar-scanner -X \
                         -Dsonar.projectKey=NodeJS-App \
                         -Dsonar.projectName=NodeJS-App \
                         -Dsonar.projectVersion=1.0 \
                         -Dsonar.projectDescription=DemoEmartProject \
-                        -Dsonar.sources=nodeapi/ \
+                        -Dsonar.sources=. \
                         -Dsonar.language=js \
                         -Dsonar.sourceEncoding=UTF-8 
                       '''
