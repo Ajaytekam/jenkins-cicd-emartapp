@@ -141,5 +141,12 @@ pipeline {
         }
         */  
 
+        stage('SoanarQube- Analysis') {
+            steps {
+                nodejs(nodeJSInstallation: 'nodejs') {
+                    sh 'cd nodeapi && npm install'
+                }
+            }
+        }
     }
 }
