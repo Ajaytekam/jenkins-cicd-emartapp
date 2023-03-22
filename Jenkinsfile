@@ -167,7 +167,7 @@ pipeline {
                         -Dsonar.projectDescription=DemoEmartProject \
                         -Dsonar.sources=nodeapi/ \
                         -Dsonar.language=js \
-                        sonar.sourceEncoding=UTF-8 
+                        -Dsonar.sourceEncoding=UTF-8 
                       '''
                     }
                 }
