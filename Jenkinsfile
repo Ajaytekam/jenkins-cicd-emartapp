@@ -52,7 +52,7 @@ pipeline {
             }
         }
 
-        stage('SonarQube Code Analysis') {
+        stage('SonarQube Code Analysis for SpringBoot') {
 
             environment {
                 scannerHome = tool 'Sonar4.8'
@@ -141,13 +141,34 @@ pipeline {
         }
         */  
 
-        stage('SoanarQube-Analysis') {
+
+        stage('Build NodeJS App') {  
             steps {
                 nodejs(nodeJSInstallationName: 'nodejs') {
                     sh 'cd nodeapi && npm install'
-                    withSonarQubeEnv('Sonar4.8') {
-                        sh 'cd nodeapi && npm install sonar-scanner'
-                        sh 'cd nodeapi && npm run sonar'
+                }
+            }
+        }
+
+        stage('SonarQube Code Analysis for NodeJS') {
+
+            environment {
+                scannerHome = tool 'Sonar4.8'
+            }
+
+            steps {
+
+                script {
+                    withSonarQubeEnv(credentialsId: 'sonar-api') {
+                      sh '''${scannerHome}/bin/sonar-scanner -X \
+                        -Dsonar.projectKey=NodeJS-App \
+                        -Dsonar.projectName=NodeJS-App \
+                        -Dsonar.projectVersion=1.0 \
+                        sonar.projectDescription=DemoEmartProject \
+                        -Dsonar.sources=nodeapi/ \
+                        -Dsonar.language=js \
+                        sonar.sourceEncoding=UTF-8 
+                      '''
                     }
                 }
             }
