@@ -141,7 +141,6 @@ pipeline {
         }
         */  
 
-
         stage('Build NodeJS App') {  
             steps {
                 nodejs(nodeJSInstallationName: 'nodejs') {
@@ -150,6 +149,32 @@ pipeline {
                 }
             }
         }
+        
+        stage('Nexus Artifact uploader') {
+            steps {
+                script {
+
+                    nexusArtifactUploader artifacts: [
+                        [
+                            artifactId: 'e-mart', 
+                            classifier: '', 
+                            file: 'nodeapi/e-mart-1.0.0.tgz', 
+                            type: 'tgz'
+                        ]
+                    ], 
+                    credentialsId: 'nexus-cred', 
+                    groupId: 'nodejs-app', 
+                    nexusUrl: '172.31.37.118:8081', 
+                    nexusVersion: 'nexus3', 
+                    protocol: 'http', 
+                    repository: 'nodeapi-release', 
+                    version: '1.0.0'
+
+                }
+            }
+        }
+
+
 
     }
 }
