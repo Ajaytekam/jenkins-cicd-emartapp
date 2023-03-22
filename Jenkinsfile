@@ -146,33 +146,10 @@ pipeline {
             steps {
                 nodejs(nodeJSInstallationName: 'nodejs') {
                     sh 'cd nodeapi && npm install'
+                    sh 'cd nodeapi && npm publish'
                 }
             }
         }
 
-        stage('SonarQube Code Analysis for NodeJS') {
-
-            environment {
-                scannerHome = tool 'Sonar4.8'
-            }
-
-            steps {
-
-                script {
-                    withSonarQubeEnv(credentialsId: 'sonar-api') {
-                      sh '''cd nodeapi && export JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64; \
-                        ${scannerHome}/bin/sonar-scanner -X \
-                        -Dsonar.projectKey=NodeJS-App \
-                        -Dsonar.projectName=NodeJS-App \
-                        -Dsonar.projectVersion=1.0 \
-                        -Dsonar.projectDescription=DemoEmartProject \
-                        -Dsonar.sources=. \
-                        -Dsonar.language=js \
-                        -Dsonar.sourceEncoding=UTF-8 
-                      '''
-                    }
-                }
-            }
-        }
     }
 }
